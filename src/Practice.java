@@ -267,7 +267,23 @@ public class Practice {
      * @return the sum of all the vertices
      */
     public static int graphSum(Vertex<Integer> start) {
-        return 0;
+        Set<Vertex<Integer>> visited = new HashSet<>();
+        return graphSum(start, visited);
+    }
+
+    public static int graphSum(Vertex<Integer> start, Set<Vertex<Integer>> visited) {
+        int sum = 0;
+        if (start == null || visited.contains(start)) {
+            return sum;
+        }
+
+        visited.add(start);
+        sum += start.data;
+        for (Vertex<Integer> neighbor : start.neighbors) {
+            sum += graphSum(neighbor, visited);
+        }
+
+        return sum;
     }
 
     /**
@@ -279,6 +295,26 @@ public class Practice {
      * @return the count of vertices with outdegree 0
      */
     public static int sinkCount(Vertex<Integer> start) {
-        return 0;
+        if (start == null) {
+            return 0;
+        }
+        Set<Vertex<Integer>> visited = new HashSet<>();
+        return sinkCount(start, visited);
+    }
+
+    public static int sinkCount(Vertex<Integer> start, Set<Vertex<Integer>> visited) {
+        int total = 0;
+        if (start == null || visited.contains(start)) {
+            return 0;
+        }
+
+        visited.add(start);
+        if (start.neighbors.isEmpty()) {
+            total++;
+        }
+        for (Vertex<Integer> neighbor : start.neighbors) {
+            total += sinkCount(neighbor, visited);
+        }
+        return total;
     }
 }
