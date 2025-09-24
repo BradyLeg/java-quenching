@@ -225,7 +225,35 @@ public class Practice {
      * @return true if the sums are equal, false otherwise
      */
     public static boolean sumMatch(BinaryTreeNode<Integer> root, ListNode<Integer> head) {
+        int lSum = 0;
+        int tSum = 0;
+        if (head != null) {
+            ListNode<Integer> current = head;
+            while (current != null) {
+                lSum += current.data;
+                current = current.next;
+            }
+        }
+        if (root != null) {
+            tSum = treeSum(root);
+        }
+
+        if (lSum == tSum) {
+            return true;
+        }
         return false;
+    }
+
+    public static int treeSum(BinaryTreeNode<Integer> root) {
+        int sum = 0;
+        if (root == null) {
+            return sum;
+        }
+
+        sum = root.data;
+        sum += treeSum(root.left);
+        sum += treeSum(root.right);
+        return sum;
     }
 
     /**
